@@ -2,8 +2,15 @@ bundle:
   name: word-list
 
 spring:
+  datasource:
+    url: jdbc:derby:diceware-db;create=true;collation=TERRITORY_BASED:PRIMARY
+  jpa:
+    database-platform: org.hibernate.dialect.DerbyTenSevenDialect
+    hibernate:
+      ddl-auto: update
   thymeleaf:
     enabled: true
     cache: true
     prefix: classpath:/templates/
     suffix: .html
+
