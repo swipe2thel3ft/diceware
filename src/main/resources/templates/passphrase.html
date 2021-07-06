@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html
+    lang="en"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Diceware Passphrase</title>
+</head>
+
+<body>
+
+<ul>
+  <li th:each="word : ${words}" th:text="${word}">No words found.</li>
+</ul>
+
+</body>
+
+</html>
