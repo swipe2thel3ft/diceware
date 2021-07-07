@@ -25,6 +25,9 @@ public class Word {
   @Column(name = "word_text", nullable = false, updatable = false)
   private String text;
 
+  @Column(name = "word_order", nullable = false, updatable = false)
+  private int order;
+
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "passphrase_id", nullable = false, updatable = false)
   @JsonIgnore
@@ -40,6 +43,14 @@ public class Word {
 
   public void setText(String text) {
     this.text = text;
+  }
+
+  public int getOrder() {
+    return order;
+  }
+
+  public void setOrder(int order) {
+    this.order = order;
   }
 
   public Passphrase getPassphrase() {

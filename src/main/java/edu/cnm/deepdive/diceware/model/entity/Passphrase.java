@@ -1,15 +1,19 @@
 package edu.cnm.deepdive.diceware.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
@@ -31,11 +35,13 @@ public class Passphrase {
   @Column(nullable = false, updatable = false)
   private Date created;
 
- @Transient
+  @Transient
   private int length;
 
-  @OneToMany(fetch = FetchType.EAGER, mappedBy = "passphrase")
- private final List<Word> words = new LinkedList<>();
+  @OneToMany(fetch = FetchType.EAGER, mappedBy = "passphrase",
+      cascade = CascadeType.ALL, orphanRemoval = true)
+  @OrderBy("order ASC")
+  private final List<Word> words = new LinkedList<>();
 
   public UUID getId() {
     return id;
@@ -45,6 +51,7 @@ public class Passphrase {
     return created;
   }
 
+  @JsonIgnore
   public int getLength() {
     return length;
   }
@@ -55,6 +62,11 @@ public class Passphrase {
 
   public List<Word> getWords() {
     return words;
+  }
+
+  @JsonProperty(value = "length")
+  public int getWordCount() {
+    return words.size();
   }
 
 }
